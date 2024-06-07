@@ -1,0 +1,84 @@
+
+
+<div class="row justify-content-between">
+
+<div class="col mx-1">
+    <mat-card>
+      <mat-card-title >Voltage</mat-card-title>
+      <ngx-charts-gauge
+      [view]="[400, 400]"
+      [min]="0"
+      [max]="50"
+      [units]="VoltageUnits"
+      [angleSpan]="240"
+      [startAngle]="-120"
+      [showAxis]="true"
+      [results]="VoltageValue">
+      </ngx-charts-gauge>
+    </mat-card>
+  </div>
+
+    
+  <div class="col mx-1">
+<mat-card>
+  <mat-card-title>Current </mat-card-title>
+  <ngx-charts-gauge
+  [view]="[400, 400]"
+  [min]="0"
+  [max]="40"
+  [units]="CurrentUnits"
+  [angleSpan]="240"
+  [startAngle]="-120"
+  [showAxis]="true"
+  [results]="CurrentValue">
+  </ngx-charts-gauge>
+</mat-card>
+</div>
+</div>
+
+<div class="row justify-content-center">
+
+  <div>
+    <mat-card>
+      <mat-card-title> Historic Voltage Measurements</mat-card-title>
+      <mat-card-content>
+        <ngx-charts-line-chart
+          [view]="[600, 400]"
+          [results]="HistoricVoltage"
+          [gradient]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+        >
+        </ngx-charts-line-chart>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div>
+    <mat-card>
+      <mat-card-title> Historic Current Measurements</mat-card-title>
+      <mat-card-content>
+        <ngx-charts-line-chart
+          [view]="[600, 400]"
+          [results]="HistoricCurrent"
+          [gradient]="false"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxisLabel]="xAxisLabelCurrent"
+          [yAxisLabel]="yAxisLabelCurrent"
+        >
+        </ngx-charts-line-chart>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>
+
