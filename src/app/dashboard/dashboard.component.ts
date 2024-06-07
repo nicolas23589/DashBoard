@@ -19,7 +19,7 @@ export class DashboardComponent {
   VoltageValue: any[] = [
     {
       "name": "Voltage",
-      "value": 50
+      "value": 10
     }];
   VoltageUnits: string = 'Volts';
   
@@ -27,7 +27,7 @@ export class DashboardComponent {
   CurrentValue: any[] = [
     {
       "name": "Current",
-      "value": 10
+      "value": 20
     }];
   CurrentUnits: string = 'Ampers';
 
