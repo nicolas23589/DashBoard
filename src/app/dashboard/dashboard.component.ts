@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-
-
+import { Component, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,13 +19,33 @@ export class DashboardComponent {
       "name": "Voltage",
       "value": 10
     }];
+
+    //TEMPORAL: this is an example of other device voltage
+
+    VoltageValue1: any[] = [
+      {
+        "name": "Voltage",
+        "value": 10
+      }];
+
+    VoltageValue2: any[] = [
+      {
+        "name": "Voltage",
+        "value": 20
+      }];
+
+      if (selected_Device_Dashboard="Device 1") {
+        this.VoltageValue= this.VoltageValue1;
+      }  
+
+
   VoltageUnits: string = 'Volts';
   
   //Necessary data for Current
   CurrentValue: any[] = [
     {
       "name": "Current",
-      "value": 20
+      "value": 40
     }];
   CurrentUnits: string = 'Ampers';
 

@@ -1,0 +1,17 @@
+
+  <google-map height="600px" width="800px" [options]="MapOptions"> 
+
+    <ng-container *ngFor="let marker of markers">
+      <map-marker [position]="marker.position" 
+        [icon]="marker.icon"
+        [title]="marker.title"
+        (mapClick)="onMarkerClick(marker)">>
+        
+      </map-marker>
+    </ng-container>
+
+  </google-map>
+
+  <p>Medidor seleccionado:</p>
+  <p>{{selectedDevice}}</p>
+
