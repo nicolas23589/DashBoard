@@ -17,9 +17,10 @@ that then uses the code of this file
 
 //This Part of the code will be like the "Object" that can be accesible in the dahsboard.component.html
 export class DashboardComponent implements OnInit {
-  //List of devices and current device
-  devices:  Device[] = [];
-  currentDevice!: Device;
+  
+   
+  devices:  Device[] = []; //List of all devices
+  currentDevice!: Device;  //Current device that was selected on the map
 
   //###################################    HERE STARTS THE MAP STUFF   ##############################################
 
@@ -45,83 +46,85 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit() { //THE FUNCTION NGONINIT IS PREDEFINED AS A ANGULAR FUNCTION, SO IT WILL EXCECUTE AT THE BEGGINING EVEN IF YOU DON´T CALL THE FUNCTION
+    
+    //There are certain parts of the code that perfectly works here, but doesn´t works (give sinxis errors) outside this function
 
-  this.devices.push(new Device( 
-    1,  //ID
-    40.42586,  //LATITUDE 
-    -86.908066,  //LONGITUDE
-    [{"value":5, "date": "01-01-2024"}], //VoltageMeasurement
-    [{"value":20, "date": "01-01-2024"}], //CurrentMeasurement
-    "http://maps.google.com/mapfiles/ms/icons/red-dot.png" //ICON IMAGE TO DISPLAY IN THE MAP
-  ));
-  this.devices.push(new Device(
+    this.devices.push(new Device( //ADDING ANOTHER DEVICE
+      1,
+      40.43586, 
+      -86.918066,
+      [ //VOLTAGE MEASUREMENTS
+        {
+          "name": "Voltage",
+          "series": [
+            {
+              "name": "13:00",
+              "value": 10
+            },
+            {
+              "name": "10:00",
+              "value": 5
+            }
+          ]
+        }
+      ],
+      [ //Current MEASUREMENTS
+        {
+          "name": "Current",
+          "series": [
+            {
+              "name": "13:00",
+              "value": 3
+            },
+            {
+              "name": "10:00",
+              "value": 5
+            }
+          ]
+        }
+      ],
+      "http://maps.google.com/mapfiles/ms/icons/red-dot.png"  
+    ));
+
+  this.devices.push(new Device( //ADDING ANOTHER DEVICE
     2,
-    40.43586, 
-    -86.918066,
-    [{"value":30, "date": "01-01-2024"}],
-    [{"value":40, "date": "01-01-2024"}],
-    "http://maps.google.com/mapfiles/ms/icons/red-dot.png"  //ICON TO DISPLAY IN THE MAP
+    40.44586, 
+    -86.928066,
+    [ //VOLTAGE MEASUREMENTS
+      {
+        "name": "Voltage",
+        "series": [
+          {
+            "name": "13:00",
+            "value": 3
+          },
+          {
+            "name": "10:00",
+            "value": 10
+          }
+        ]
+      }
+    ],
+    [ //Current MEASUREMENTS
+      {
+        "name": "Current",
+        "series": [
+          {
+            "name": "13:00",
+            "value": 10
+          },
+          {
+            "name": "10:00",
+            "value": 3
+          }
+        ]
+      }
+    ],
+    "http://maps.google.com/mapfiles/ms/icons/red-dot.png"  
   ));
 
   this.currentDevice= this.devices[0];
+
   }
-
-  //Necessary data for Historic Voltage, 
-  HistoricVoltage: any[] = [
-    {
-      "name": "Voltage",
-      "series": [
-        {
-          "name": "12:00",
-          "value": 0
-        },
-        {
-          "name": "13:00",
-          "value": 3
-        },
-        {
-          "name": "14:00",
-          "value": 4
-        },
-        {
-          "name": "15:00",
-          "value": 2
-        },
-        {
-          "name": "16:00",
-          "value": 10
-        }
-      ]
-    }
-  ];
-
-  HistoricCurrent: any[] = [
-    {
-      "name": "Current",
-      "series": [
-        {
-          "name": "12:00",
-          "value": 0
-        },
-        {
-          "name": "13:00",
-          "value": 13
-        },
-        {
-          "name": "14:00",
-          "value": 6
-        },
-        {
-          "name": "15:00",
-          "value": 10
-        },
-        {
-          "name": "16:00",
-          "value": 20
-        }
-      ]
-    }
-  ];
-;
 
 }

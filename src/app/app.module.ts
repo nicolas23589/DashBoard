@@ -10,13 +10,12 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { MapComponent } from './map/map.component';
+
 
 @NgModule({
   declarations: [	
     AppComponent,
-    DashboardComponent,
-    MapComponent
+    DashboardComponent
    ],
   imports: [
     BrowserModule,

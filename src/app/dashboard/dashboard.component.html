@@ -58,7 +58,7 @@
       <mat-card-content>
         <ngx-charts-line-chart
           [view]="[600, 400]"
-          [results]="HistoricVoltage"
+          [results]="currentDevice.voltageMeasurements"
           [gradient]="true"
           [xAxis]="true"
           [yAxis]="true"
@@ -79,7 +79,7 @@
       <mat-card-content>
         <ngx-charts-line-chart
           [view]="[600, 400]"
-          [results]="HistoricCurrent"
+          [results]="currentDevice.currentMeasurements"
           [gradient]="false"
           [xAxis]="true"
           [yAxis]="true"

@@ -1,6 +1,6 @@
 export class Measurement {
     constructor(
-      public dateTime: Date,
+      public date: string,
       public value: number
     ) {}
   }

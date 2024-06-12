@@ -9,10 +9,10 @@ export class Device {
     ) {}
 
     get getCurrentVoltage(): any[] {
-        return this.voltageMeasurements[0]["value"] ;
+        return this.voltageMeasurements[0].series[0].value ;
     }
 
     get getCurrentCurrent(): any[] {
-        return this.currentMeasurements[0]["value"] ;
+        return this.currentMeasurements[0].series[0].value ;
     }
   }
