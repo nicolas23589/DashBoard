@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 
 import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
 import { GoogleMapsModule } from "@angular/google-maps";
 
 

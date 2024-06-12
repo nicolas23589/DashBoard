@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SensorDataService } from '../sensor-data.service';
+import { Device } from '../Device-class';
+
 
 
 @Component({
@@ -6,14 +9,31 @@ import { Component } from '@angular/core';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent  {
+export class MapComponent  implements OnInit{
+  
+  devices: Device[] = [];
+
+  ;
+
+  constructor(private sensorDataService: SensorDataService) {} 
+
+  ngOnInit(){
+    
+    this.sensorDataService.getDevices().subscribe(devices => {
+      this.devices = devices;
+    });
+  };
+
+   
+
     //Visual options of the map
     MapOptions: google.maps.MapOptions = {
     mapId: "e87693c86192baae",
-    center: { lat: -34.397, lng: 150.644 },
-    zoom: 8,
+    center: { lat:0, lng:0},
+    zoom: 1,
   };
 
+  /*
   markers = [
     {
       position: { lat: -34.397, lng: 150.644 },
@@ -26,20 +46,20 @@ export class MapComponent  {
       icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
     }
   ];
-
+*/
   
-  selectedDevice: string= "Device 1";
 
-  onMarkerClick(marker: any) {
+
+  onMarkerClick(deviceClicked: any) {
     
-    this.selectedDevice = marker.title;
+    this.sensorDataService.updateCurrentDevice = deviceClicked;
 
 
     // this line change all the markets colors to red  
-    this.markers.forEach(m => m.icon = "http://maps.google.com/mapfiles/ms/icons/red-dot.png");
+    this.devices.forEach(device => device.icon = "http://maps.google.com/mapfiles/ms/icons/red-dot.png");
 
     // This change the color of the selected marker
-    marker.icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+    deviceClicked.icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
 }
 
 }

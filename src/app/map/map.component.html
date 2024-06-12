@@ -1,17 +1,26 @@
 
   <google-map height="600px" width="800px" [options]="MapOptions"> 
 
-    <ng-container *ngFor="let marker of markers">
-      <map-marker [position]="marker.position" 
-        [icon]="marker.icon"
-        [title]="marker.title"
-        (mapClick)="onMarkerClick(marker)">>
+    <map-marker
+      [position]= "{lat: -25.274398, lng:133.775136}">
+        
+      </map-marker>
+
+    <ng-container *ngFor="let device of devices">
+
+      <map-marker
+
+        [position]="{ lat: device.latitude, lng: device.longitude }" 
+        [icon]="device.icon"
+
+        (mapClick)="onMarkerClick(device)">>
         
       </map-marker>
     </ng-container>
 
   </google-map>
 
-  <p>Medidor seleccionado:</p>
-  <p>{{selectedDevice}}</p>
+
+
+
 

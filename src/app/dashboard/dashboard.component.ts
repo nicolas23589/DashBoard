@@ -1,4 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { SensorDataService } from '../sensor-data.service';
+import { Device } from '../Device-class';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,6 +11,19 @@ import { Component, ViewChild } from '@angular/core';
 //This Part of the code will be like the "Object" that can be accesible in the dahsboard.component.html
 export class DashboardComponent {
 
+  constructor(private sensorDataService: SensorDataService){}
+
+  devices: Device[] = [];
+
+  getDevices() {
+    this.sensorDataService.getDevices().subscribe(devices => {
+      this.devices = devices;
+    });
+  }
+  ngOnInit() {
+    this.getDevices();
+  }
+
 
   /*The following is the necessary data for every graphic, the most important is that every variable which have data-
    to be displayed needs to be type any[]*/
@@ -17,7 +32,7 @@ export class DashboardComponent {
   VoltageValue: any[] = [
     {
       "name": "Voltage",
-      "value": 10
+      "value": this.sensorDataService.getCurrentDevice()?.firstVoltageMeasurementValue
     }];
 
     //TEMPORAL: this is an example of other device voltage
