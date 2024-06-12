@@ -3,12 +3,13 @@ import { SensorDataService } from '../sensor-data.service';
 import { Device } from '../Device-class';
 
 
-
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
+
+
 export class MapComponent  implements OnInit{
   
   devices: Device[] = [];

@@ -1,23 +1,12 @@
 
   <google-map height="600px" width="800px" [options]="MapOptions"> 
-
-    <map-marker
-      [position]= "{lat: -25.274398, lng:133.775136}">
-        
-      </map-marker>
-
     <ng-container *ngFor="let device of devices">
-
       <map-marker
-
         [position]="{ lat: device.latitude, lng: device.longitude }" 
         [icon]="device.icon"
-
         (mapClick)="onMarkerClick(device)">>
-        
       </map-marker>
     </ng-container>
-
   </google-map>
 
 

@@ -1,4 +1,18 @@
-
+<div class="container">
+  <div class="content">
+    <google-map height="300px" width="500px" [options]="MapOptions"> 
+      <ng-container *ngFor="let device of devices">
+        <map-marker
+          [position]="{ lat: device.latitude, lng: device.longitude }" 
+          [icon]="device.icon"
+          
+          (mapClick)="onMarkerClick(device)">>
+        </map-marker>
+      </ng-container>
+    </google-map>
+    <p>CurrentDevice: {{currentDevice.id}}</p>
+  </div>
+</div>
 
 <div class="row justify-content-between">
 
@@ -9,11 +23,11 @@
       [view]="[400, 400]"
       [min]="0"
       [max]="100"
-      [units]="VoltageUnits"
+      [units]= "'Volts'"  
       [angleSpan]="240"
       [startAngle]="-120"
       [showAxis]="true"
-      [results]="VoltageValue">
+      [results]='[{"name": "Voltage", "value": currentDevice.getCurrentVoltage}]'>
       </ngx-charts-gauge>
     </mat-card>
   </div>
@@ -26,11 +40,11 @@
   [view]="[400, 400]"
   [min]="0"
   [max]="40"
-  [units]="CurrentUnits"
+  [units]="'Ampers'"
   [angleSpan]="240"
   [startAngle]="-120"
   [showAxis]="true"
-  [results]="CurrentValue">
+  [results]='[{"name": "Current", "value": currentDevice.getCurrentCurrent}]'>
   </ngx-charts-gauge>
 </mat-card>
 </div>
@@ -51,8 +65,8 @@
           [legend]="true"
           [showXAxisLabel]="true"
           [showYAxisLabel]="true"
-          [xAxisLabel]="xAxisLabel"
-          [yAxisLabel]="yAxisLabel"
+          [xAxisLabel]='"Hour"'
+          [yAxisLabel]='"Current"'
         >
         </ngx-charts-line-chart>
       </mat-card-content>
@@ -72,8 +86,8 @@
           [legend]="true"
           [showXAxisLabel]="true"
           [showYAxisLabel]="true"
-          [xAxisLabel]="xAxisLabelCurrent"
-          [yAxisLabel]="yAxisLabelCurrent"
+          [xAxisLabel]='"Hour"'
+          [yAxisLabel]='"Voltage"'
         >
         </ngx-charts-line-chart>
       </mat-card-content>

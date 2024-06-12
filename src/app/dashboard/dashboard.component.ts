@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { SensorDataService } from '../sensor-data.service';
+import { Component, OnInit } from '@angular/core';
 import { Device } from '../Device-class';
 
 @Component({
@@ -8,61 +7,64 @@ import { Device } from '../Device-class';
   styleUrls: ['./dashboard.component.css']
 })
 
+
+/* PAY ATTENTION: In  dashboard.component.html, when you are using ngx charts, if you use "" the library will search
+in this file the variable u other part of the code of this file, if you use '' you are using a creating a object
+directly in the html (no accesing the code of this file), but you can create a object in the html 
+that then uses the code of this file
+*/
+
+
 //This Part of the code will be like the "Object" that can be accesible in the dahsboard.component.html
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+  //List of devices and current device
+  devices:  Device[] = [];
+  currentDevice!: Device;
 
-  constructor(private sensorDataService: SensorDataService){}
+  //###################################    HERE STARTS THE MAP STUFF   ##############################################
 
-  devices: Device[] = [];
+  //Visual options of the map
+  MapOptions: google.maps.MapOptions = {
+    mapId: "e87693c86192baae", //should be the same id that appears in google maps console
+    center: { lat:40.428421, lng:-86.917492},
+    zoom: 12,
+  };
 
-  getDevices() {
-    this.sensorDataService.getDevices().subscribe(devices => {
-      this.devices = devices;
-    });
-  }
-  ngOnInit() {
-    this.getDevices();
-  }
+  onMarkerClick(deviceClicked: any) { 
+    this.currentDevice= deviceClicked; //Update the current device, it implies that the voltage graphics and others are updated automatically too
 
+    // this line change all the markets colors to red  
+    this.devices.forEach(device => device.icon = "http://maps.google.com/mapfiles/ms/icons/red-dot.png");
 
-  /*The following is the necessary data for every graphic, the most important is that every variable which have data-
-   to be displayed needs to be type any[]*/
+    // This change the color of the selected marker
+    deviceClicked.icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+}
 
-  //Necessary data for voltage
-  VoltageValue: any[] = [
-    {
-      "name": "Voltage",
-      "value": this.sensorDataService.getCurrentDevice()?.firstVoltageMeasurementValue
-    }];
-
-    //TEMPORAL: this is an example of other device voltage
-
-    VoltageValue1: any[] = [
-      {
-        "name": "Voltage",
-        "value": 10
-      }];
-
-    VoltageValue2: any[] = [
-      {
-        "name": "Voltage",
-        "value": 20
-      }];
-
-      if (selected_Device_Dashboard="Device 1") {
-        this.VoltageValue= this.VoltageValue1;
-      }  
-
-
-  VoltageUnits: string = 'Volts';
   
-  //Necessary data for Current
-  CurrentValue: any[] = [
-    {
-      "name": "Current",
-      "value": 40
-    }];
-  CurrentUnits: string = 'Ampers';
+  //###################################    HERE FINISH THE MAP STUFF (AND STARTS THE GRAPHICS STUFF)   ##############################################
+
+
+  ngOnInit() { //THE FUNCTION NGONINIT IS PREDEFINED AS A ANGULAR FUNCTION, SO IT WILL EXCECUTE AT THE BEGGINING EVEN IF YOU DON´T CALL THE FUNCTION
+
+  this.devices.push(new Device( 
+    1,  //ID
+    40.42586,  //LATITUDE 
+    -86.908066,  //LONGITUDE
+    [{"value":5, "date": "01-01-2024"}], //VoltageMeasurement
+    [{"value":20, "date": "01-01-2024"}], //CurrentMeasurement
+    "http://maps.google.com/mapfiles/ms/icons/red-dot.png" //ICON IMAGE TO DISPLAY IN THE MAP
+  ));
+  this.devices.push(new Device(
+    2,
+    40.43586, 
+    -86.918066,
+    [{"value":30, "date": "01-01-2024"}],
+    [{"value":40, "date": "01-01-2024"}],
+    "http://maps.google.com/mapfiles/ms/icons/red-dot.png"  //ICON TO DISPLAY IN THE MAP
+  ));
+
+  this.currentDevice= this.devices[0];
+  }
 
   //Necessary data for Historic Voltage, 
   HistoricVoltage: any[] = [
@@ -92,9 +94,6 @@ export class DashboardComponent {
       ]
     }
   ];
-  xAxisLabel: string = 'Hour';
-  yAxisLabel: string = 'Voltage';
-
 
   HistoricCurrent: any[] = [
     {
@@ -123,12 +122,6 @@ export class DashboardComponent {
       ]
     }
   ];
-  xAxisLabelCurrent: string = 'Hour';
-  yAxisLabelCurrent: string = 'current';
+;
 
 }
-
-
-
-
-
