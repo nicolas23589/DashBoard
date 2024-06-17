@@ -1,6 +1,7 @@
 export class Device {
     constructor(
         public id: number,
+        public nombre: string,
         public latitude: number,
         public longitude: number,
         public voltageMeasurements: any[],

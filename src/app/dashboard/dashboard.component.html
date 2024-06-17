@@ -1,3 +1,14 @@
+<div id="map" style="height: 30%; width: 30%;"></div>
+
+<div>
+  <ng-container *ngFor="let device of devices">
+    <ul>
+        <button (click)="updateCurrentDevice(device)" >{{device.nombre}}</button>
+    </ul>
+  </ng-container>
+  
+</div>
+
 <div class="container">
   <div class="content">
     <google-map height="300px" width="500px" [options]="MapOptions"> 
@@ -6,11 +17,11 @@
           [position]="{ lat: device.latitude, lng: device.longitude }" 
           [icon]="device.icon"
           
-          (mapClick)="onMarkerClick(device)">>
+          (mapClick)="updateCurrentDevice(device)">>
         </map-marker>
       </ng-container>
     </google-map>
-    <p>CurrentDevice: {{currentDevice.id}}</p>
+    <p>CurrentDevice: {{currentDevice.nombre}}</p>
   </div>
 </div>
 
