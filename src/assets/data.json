@@ -1,0 +1,42 @@
+[
+{   "applicationID":"2",
+    "applicationName":"app1",
+    "deviceName":"device1",
+    "devEUI":"JLOn7lPpYn8=",
+    "rxInfo":[],
+    "txInfo":{  "frequency":867700000,
+                "modulation":"LORA",
+                "loRaModulationInfo":{  "bandwidth":125,
+                                        "spreadingFactor":7,
+                                        "codeRate":"4/5",
+                                        "polarizationInversion":false
+                                        }
+                },
+    "adr":true,
+    "dr":5,
+    "fCnt":771,
+    "fPort":2,
+    "data":"AWcBGwJolA==",
+    "objectJSON":"{\"temperatureSensor\":{\"1\":28.3}, \"humiditySensor\":{\"2\":74}}",
+    "tags":{},
+    "confirmedUplink":true,
+    "devAddr":"AfC+mQ==",
+    "publishedAt":"2024-06-17T20:10:02.600364131Z",
+    "deviceProfileID":"53e95c82-96a1-4c4f-8d6a-786828376d53",
+    "deviceProfileName":"device-prof-us915"
+    },
+
+
+
+
+{"applicationID":"2","applicationName":"app1","deviceName":"device1","devEUI":"JLOn7lPpYn8=","rxInfo":[],"txInfo":{"frequency":868100000,"modulation":"LORA","loRaModulationInfo":{"bandwidth":125,"spreadingFactor":7,"codeRate":"4/5","polarizationInversion":false}},"adr":true,"dr":5,"fCnt":50,"fPort":2,"data":"AWcBGwJolA==","objectJSON":"{\"temperatureSensor\":{\"1\":28.3},\"humiditySensor\":{\"2\":74}}","tags":{},"confirmedUplink":true,"devAddr":"AO9m2g==","publishedAt":"2024-06-17T20:39:11.852394246Z","deviceProfileID":"53e95c82-96a1-4c4f-8d6a-786828376d53","deviceProfileName":"device-prof-us915"},
+{"applicationID":"2","applicationName":"app1","deviceName":"device1","devEUI":"JLOn7lPpYn8=","rxInfo":[],"txInfo":{"frequency":867900000,"modulation":"LORA","loRaModulationInfo":{"bandwidth":125,"spreadingFactor":7,"codeRate":"4/5","polarizationInversion":false}},"adr":true,"dr":5,"fCnt":51,"fPort":2,"data":"AWcBGwJolA==","objectJSON":"{\"temperatureSensor\":{\"1\":28.3},\"humiditySensor\":{\"2\":74}}","tags":{},"confirmedUplink":true,"devAddr":"AO9m2g==","publishedAt":"2024-06-17T20:39:26.296559021Z","deviceProfileID":"53e95c82-96a1-4c4f-8d6a-786828376d53","deviceProfileName":"device-prof-us915"},
+{"applicationID":"2","applicationName":"app1","deviceName":"device1","devEUI":"JLOn7lPpYn8=","rxInfo":[],"txInfo":{"frequency":868500000,"modulation":"LORA","loRaModulationInfo":{"bandwidth":125,"spreadingFactor":7,"codeRate":"4/5","polarizationInversion":false}},"adr":true,"dr":5,"fCnt":52,"fPort":2,"data":"AWcBGwJolA==","objectJSON":"{\"temperatureSensor\":{\"1\":28.3},\"humiditySensor\":{\"2\":74}}","tags":{},"confirmedUplink":true,"devAddr":"AO9m2g==","publishedAt":"2024-06-17T20:39:42.352981536Z","deviceProfileID":"53e95c82-96a1-4c4f-8d6a-786828376d53","deviceProfileName":"device-prof-us915"},
+{"applicationID":"2","applicationName":"app1","deviceName":"device1","devEUI":"JLOn7lPpYn8=","rxInfo":[],"txInfo":{"frequency":868500000,"modulation":"LORA","loRaModulationInfo":{"bandwidth":125,"spreadingFactor":7,"codeRate":"4/5","polarizationInversion":false}},"adr":true,"dr":5,"fCnt":53,"fPort":2,"data":"AWcBGwJolA==","objectJSON":"{\"temperatureSensor\":{\"1\":28.3},\"humiditySensor\":{\"2\":74}}","tags":{},"confirmedUplink":true,"devAddr":"AO9m2g==","publishedAt":"2024-06-17T20:39:57.587692403Z","deviceProfileID":"53e95c82-96a1-4c4f-8d6a-786828376d53","deviceProfileName":"device-prof-us915"},
+{"applicationID":"2","applicationName":"app1","deviceName":"device1","devEUI":"JLOn7lPpYn8=","rxInfo":[],"txInfo":{"frequency":868100000,"modulation":"LORA","loRaModulationInfo":{"bandwidth":125,"spreadingFactor":7,"codeRate":"4/5","polarizationInversion":false}},"adr":true,"dr":5,"fCnt":54,"fPort":2,"data":"AWcBGwJolA==","objectJSON":"{\"temperatureSensor\":{\"1\":28.3},\"humiditySensor\":{\"2\":74}}","tags":{},"confirmedUplink":true,"devAddr":"AO9m2g==","publishedAt":"2024-06-17T20:40:12.988871896Z","deviceProfileID":"53e95c82-96a1-4c4f-8d6a-786828376d53","deviceProfileName":"device-prof-us915"},
+{"applicationID":"2","applicationName":"app1","deviceName":"device1","devEUI":"JLOn7lPpYn8=","rxInfo":[],"txInfo":{"frequency":867300000,"modulation":"LORA","loRaModulationInfo":{"bandwidth":125,"spreadingFactor":7,"codeRate":"4/5","polarizationInversion":false}},"adr":true,"dr":5,"fCnt":67,"fPort":2,"data":"AWcBGwJolA==","objectJSON":"{\"temperatureSensor\":{\"1\":28.3},\"humiditySensor\":{\"2\":74}}","tags":{},"confirmedUplink":true,"devAddr":"AO9m2g==","publishedAt":"2024-06-17T20:43:33.384738917Z","deviceProfileID":"53e95c82-96a1-4c4f-8d6a-786828376d53","deviceProfileName":"device-prof-us915"},
+{"applicationID":"2","applicationName":"app1","deviceName":"device1","devEUI":"JLOn7lPpYn8=","rxInfo":[],"txInfo":{"frequency":867500000,"modulation":"LORA","loRaModulationInfo":{"bandwidth":125,"spreadingFactor":7,"codeRate":"4/5","polarizationInversion":false}},"adr":true,"dr":5,"fCnt":68,"fPort":2,"data":"AWcBGwJolA==","objectJSON":"{\"temperatureSensor\":{\"1\":28.3},\"humiditySensor\":{\"2\":74}}","tags":{},"confirmedUplink":true,"devAddr":"AO9m2g==","publishedAt":"2024-06-17T20:43:48.617144498Z","deviceProfileID":"53e95c82-96a1-4c4f-8d6a-786828376d53","deviceProfileName":"device-prof-us915"},
+{"applicationID":"2","applicationName":"app1","deviceName":"device1","devEUI":"JLOn7lPpYn8=","rxInfo":[],"txInfo":{"frequency":867700000,"modulation":"LORA","loRaModulationInfo":{"bandwidth":125,"spreadingFactor":7,"codeRate":"4/5","polarizationInversion":false}},"adr":true,"dr":5,"fCnt":69,"fPort":2,"data":"AWcBGwJolA==","objectJSON":"{\"temperatureSensor\":{\"1\":28.3},\"humiditySensor\":{\"2\":74}}","tags":{},"confirmedUplink":true,"devAddr":"AO9m2g==","publishedAt":"2024-06-17T20:44:03.669732399Z","deviceProfileID":"53e95c82-96a1-4c4f-8d6a-786828376d53","deviceProfileName":"device-prof-us915"},
+{"applicationID":"2","applicationName":"app1","deviceName":"device1","devEUI":"JLOn7lPpYn8=","rxInfo":[],"txInfo":{"frequency":868300000,"modulation":"LORA","loRaModulationInfo":{"bandwidth":125,"spreadingFactor":7,"codeRate":"4/5","polarizationInversion":false}},"adr":true,"dr":5,"fCnt":70,"fPort":2,"data":"AWcBGwJolA==","objectJSON":"{\"temperatureSensor\":{\"1\":28.3},\"humiditySensor\":{\"2\":74}}","tags":{},"confirmedUplink":true,"devAddr":"AO9m2g==","publishedAt":"2024-06-17T20:44:19.290826692Z","deviceProfileID":"53e95c82-96a1-4c4f-8d6a-786828376d53","deviceProfileName":"device-prof-us915"},
+{"applicationID":"2","applicationName":"app1","deviceName":"device1","devEUI":"JLOn7lPpYn8=","rxInfo":[],"txInfo":{"frequency":868100000,"modulation":"LORA","loRaModulationInfo":{"bandwidth":125,"spreadingFactor":7,"codeRate":"4/5","polarizationInversion":false}},"adr":true,"dr":5,"fCnt":71,"fPort":2,"data":"AWcBGwJolA==","objectJSON":"{\"temperatureSensor\":{\"1\":28.3},\"humiditySensor\":{\"2\":74}}","tags":{},"confirmedUplink":true,"devAddr":"AO9m2g==","publishedAt":"2024-06-17T20:44:35.090004653Z","deviceProfileID":"53e95c82-96a1-4c4f-8d6a-786828376d53","deviceProfileName":"device-prof-us915"},
+]

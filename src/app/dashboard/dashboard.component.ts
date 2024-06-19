@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Device } from '../Device-class';
+import { DataService } from '../data.service';
 
-declare let L: any;
+declare let L: any; //neccesary for the map
 
 @Component({
   selector: 'app-dashboard',
@@ -20,12 +21,22 @@ that then uses the code of this file
 export class DashboardComponent implements OnInit {
 
   private map: any;
-  constructor() {}
+  devices:  Device[] = []; //List of all devices
+  currentDevice!: Device;  //Current device that was selected on the map
+  
+
+  constructor(private dataService: DataService) {  }
+  
+  getRealMeasurements(){
+
+    this.dataService.getMeasurementsData().subscribe(Receiptdevice => {
+      this.devices.push(Receiptdevice);
+    });
+  }
 
   //Receipt data test (temporal)
 
-  devices:  Device[] = []; //List of all devices
-  currentDevice!: Device;  //Current device that was selected on the map
+  
 
   //###################################    HERE STARTS THE MAP STUFF   ##############################################
 
@@ -33,7 +44,7 @@ export class DashboardComponent implements OnInit {
   MapOptions: google.maps.MapOptions = {
     mapId: "e87693c86192baae", //should be the same id that appears in google maps console
     center: { lat:40.428421, lng:-86.917492},
-    zoom: 12,
+    zoom: 7,
   };
 
 
@@ -55,9 +66,11 @@ export class DashboardComponent implements OnInit {
     this.initMap();
 
     //There are certain parts of the code that perfectly works here, but doesn´t works (give sinxis errors) outside this function
-
+    
+    
+    
     this.devices.push(new Device( //ADDING ANOTHER DEVICE
-      1, "Device 1", 40.43586, -86.918066,
+      1, "Device constante 1", 40.43586, -86.918066,
       [ //VOLTAGE MEASUREMENTS
         {
           "name": "Voltage",
@@ -90,42 +103,8 @@ export class DashboardComponent implements OnInit {
       ],
       "http://maps.google.com/mapfiles/ms/icons/red-dot.png"  
     ));
-
-  this.devices.push(new Device( //ADDING ANOTHER DEVICE
-    2, "Device 2",40.44586, -86.928066,
-    [ //VOLTAGE MEASUREMENTS
-      {
-        "name": "Voltage",
-        "series": [
-          {
-            "name": "13:00",
-            "value": 3
-          },
-          {
-            "name": "10:00",
-            "value": 10
-          }
-        ]
-      }
-    ],
-    [ //Current MEASUREMENTS
-      {
-        "name": "Current",
-        "series": [
-          {
-            "name": "13:00",
-            "value": 10
-          },
-          {
-            "name": "10:00",
-            "value": 3
-          }
-        ]
-      }
-    ],
-    "http://maps.google.com/mapfiles/ms/icons/red-dot.png"  
-  ));
-
+    this.getRealMeasurements();
+  
   this.currentDevice= this.devices[0];
 
   }

@@ -1,9 +1,10 @@
+
 <div id="map" style="height: 30%; width: 30%;"></div>
 
 <div>
   <ng-container *ngFor="let device of devices">
     <ul>
-        <button (click)="updateCurrentDevice(device)" >{{device.nombre}}</button>
+        <button (click)="updateCurrentDevice(device)" >{{device.name}}</button>
     </ul>
   </ng-container>
   
@@ -21,7 +22,7 @@
         </map-marker>
       </ng-container>
     </google-map>
-    <p>CurrentDevice: {{currentDevice.nombre}}</p>
+    <p>CurrentDevice: {{currentDevice.name}}</p>
   </div>
 </div>
 
@@ -38,7 +39,7 @@
       [angleSpan]="240"
       [startAngle]="-120"
       [showAxis]="true"
-      [results]='[{"name": "Voltage", "value": currentDevice.getCurrentVoltage}]'>
+      [results]='[{"name": "Voltage", "value": currentDevice.voltageMeasurements[0].series[0].value}]'>
       </ngx-charts-gauge>
     </mat-card>
   </div>
@@ -55,7 +56,7 @@
   [angleSpan]="240"
   [startAngle]="-120"
   [showAxis]="true"
-  [results]='[{"name": "Current", "value": currentDevice.getCurrentCurrent}]'>
+  [results]='[{"name": "Current", "value": currentDevice.currentMeasurements[0].series[0].value}]'>
   </ngx-charts-gauge>
 </mat-card>
 </div>
