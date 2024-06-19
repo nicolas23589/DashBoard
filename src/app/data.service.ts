@@ -12,7 +12,7 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  getMeasurementsData(): Observable<Device> {
-    return this.http.get<Device>(this.jsonUrl);
+  getMeasurementsData(): Observable<Device[]> {
+    return this.http.get<Device[]>(this.jsonUrl);
   }
 }

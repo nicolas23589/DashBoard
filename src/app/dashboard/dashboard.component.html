@@ -7,7 +7,6 @@
         <button (click)="updateCurrentDevice(device)" >{{device.name}}</button>
     </ul>
   </ng-container>
-  
 </div>
 
 <div class="container">
@@ -26,20 +25,22 @@
   </div>
 </div>
 
+
+
 <div class="row justify-content-between">
 
 <div class="col mx-1">
     <mat-card>
-      <mat-card-title >Voltage</mat-card-title>
+      <mat-card-title >Temperature</mat-card-title>
       <ngx-charts-gauge
       [view]="[400, 400]"
       [min]="0"
       [max]="100"
-      [units]= "'Volts'"  
+      [units]= "'Celcius'"  
       [angleSpan]="240"
       [startAngle]="-120"
       [showAxis]="true"
-      [results]='[{"name": "Voltage", "value": currentDevice.voltageMeasurements[0].series[0].value}]'>
+      [results]='[{"name": "Temperature", "value": currentDevice.voltageMeasurements[currentDevice.voltageMeasurements.length - 1].value}]'>
       </ngx-charts-gauge>
     </mat-card>
   </div>
@@ -47,16 +48,16 @@
     
   <div class="col mx-1">
 <mat-card>
-  <mat-card-title>Current </mat-card-title>
+  <mat-card-title>Humidity </mat-card-title>
   <ngx-charts-gauge
   [view]="[400, 400]"
   [min]="0"
   [max]="40"
-  [units]="'Ampers'"
+  [units]="'Humidity units'"
   [angleSpan]="240"
   [startAngle]="-120"
   [showAxis]="true"
-  [results]='[{"name": "Current", "value": currentDevice.currentMeasurements[0].series[0].value}]'>
+  [results]='[{"name": "Humidity", "value": currentDevice.currentMeasurements[currentDevice.currentMeasurements.length - 1].value}]'>
   </ngx-charts-gauge>
 </mat-card>
 </div>
@@ -70,7 +71,9 @@
       <mat-card-content>
         <ngx-charts-line-chart
           [view]="[600, 400]"
-          [results]="currentDevice.voltageMeasurements"
+          [results]='[{
+                        "name": "Voltage",
+                        "series":currentDevice.voltageMeasurements}]'
           [gradient]="true"
           [xAxis]="true"
           [yAxis]="true"
@@ -91,7 +94,9 @@
       <mat-card-content>
         <ngx-charts-line-chart
           [view]="[600, 400]"
-          [results]="currentDevice.currentMeasurements"
+          [results]='[{
+            "name": "Current",
+            "series":currentDevice.currentMeasurements}]'
           [gradient]="false"
           [xAxis]="true"
           [yAxis]="true"

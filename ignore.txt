@@ -1,0 +1,89 @@
+def get_name():
+
+    response = [
+        {
+        "id":20,
+        "name": "Device 20 api", 
+        "latitude": 40.93586, 
+        "longitude": -86.018066,
+        "voltageMeasurements" : [ 
+            {
+        "name": "Voltage",
+        "series": [
+          {
+            "name": "13:00",
+            "value": 1
+            },
+          {
+            "name": "10:00",
+            "value": 10
+            }
+                    ]   
+                }
+    ],
+      "currentMeasurements" : [
+      {
+        "name": "Current",
+        "series": [
+          {
+            "name": "13:00",
+            "value": 1
+          },
+          {
+            "name": "10:00",
+            "value": 10
+          }
+        ]
+      },
+      
+    ],
+      "icon": "http://maps.google.com/mapfiles/ms/icons/red-dot.png"  
+    },
+
+    {
+        "id":40,
+        "name": "Device 40 api", 
+        "latitude": 40.43586, 
+        "longitude": -86.218066,
+        "voltageMeasurements" : [ 
+            {
+        "name": "Voltage",
+        "series": [
+          {
+            "name": "13:00",
+            "value": 2
+            },
+          {
+            "name": "10:00",
+            "value": 10
+            }
+                    ]   
+                }
+    ],
+      "currentMeasurements" : [
+      {
+        "name": "Current",
+        "series": [
+          {
+            "name": "13:00",
+            "value": 2
+          },
+          {
+            "name": "10:00",
+            "value": 10
+          }
+        ]
+      },
+      
+    ],
+      "icon": "http://maps.google.com/mapfiles/ms/icons/red-dot.png"  
+    }
+
+
+    ]
+
+
+    return jsonify(response)
+
+if __name__ == '__main__':
+    app.run(debug=True)

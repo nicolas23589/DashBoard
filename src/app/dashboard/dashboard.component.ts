@@ -24,21 +24,19 @@ export class DashboardComponent implements OnInit {
   devices:  Device[] = []; //List of all devices
   currentDevice!: Device;  //Current device that was selected on the map
   
-
   constructor(private dataService: DataService) {  }
   
   getRealMeasurements(){
 
-    this.dataService.getMeasurementsData().subscribe(Receiptdevice => {
-      this.devices.push(Receiptdevice);
+    this.dataService.getMeasurementsData().subscribe(receiptDevices => {
+
+      for (let i = 0; i < receiptDevices.length; i++) {
+        this.devices.push(receiptDevices[i])
+      }
     });
   }
 
-  //Receipt data test (temporal)
-
-  
-
-  //###################################    HERE STARTS THE MAP STUFF   ##############################################
+  //###################################    HERE STARTS THE GOOGLE MAPS CODE   ##############################################
 
   //Visual options of the map
   MapOptions: google.maps.MapOptions = {
@@ -48,7 +46,8 @@ export class DashboardComponent implements OnInit {
   };
 
 
-  updateCurrentDevice(deviceClicked: any) { 
+  updateCurrentDevice(deviceClicked: any) { //This function is also called by the manual selector
+
     this.currentDevice= deviceClicked; //Update the current device, it implies that the voltage graphics and others are updated automatically too
 
     // this line change all the markets colors to red  
@@ -62,54 +61,13 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit() { //THE FUNCTION NGONINIT IS PREDEFINED AS A ANGULAR FUNCTION, SO IT WILL EXCECUTE AT THE BEGGINING EVEN IF YOU DON´T CALL THE FUNCTION
-    
-    this.initMap();
-
     //There are certain parts of the code that perfectly works here, but doesn´t works (give sinxis errors) outside this function
-    
-    
-    
-    this.devices.push(new Device( //ADDING ANOTHER DEVICE
-      1, "Device constante 1", 40.43586, -86.918066,
-      [ //VOLTAGE MEASUREMENTS
-        {
-          "name": "Voltage",
-          "series": [
-            {
-              "name": "13:00",
-              "value": 10
-            },
-            {
-              "name": "10:00",
-              "value": 5
-            }
-          ]
-        }
-      ],
-      [ //Current MEASUREMENTS
-        {
-          "name": "Current",
-          "series": [
-            {
-              "name": "13:00",
-              "value": 3
-            },
-            {
-              "name": "10:00",
-              "value": 5
-            }
-          ]
-        }
-      ],
-      "http://maps.google.com/mapfiles/ms/icons/red-dot.png"  
-    ));
     this.getRealMeasurements();
-  
-  this.currentDevice= this.devices[0];
-
+    this.currentDevice= this.devices[0];
+    this.initMap();
   }
 
-  private initMap(): void {
+  private initMap(): void { //This function will init the open street view map (isn't for google maps)
     this.map = L.map('map', {
       center: [51.505, -0.09],
       zoom: 13
