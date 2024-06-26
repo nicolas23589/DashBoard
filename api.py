@@ -9,61 +9,70 @@ measurementsSTR=''
 
 def proccesFile():
    
-  with open('data.txt', 'r') as file:
-    measurementsSTR = file.read() #before initialize the xaamp server, the data.txt file must have only a space " " at the beggining
-    measurementsSTR = '[' + measurementsSTR[1:-2] + ' ' + ']'  
+  with open("C:/xampp/htdocs/lorawan/data - copia.txt", 'r') as file:
+    measurementsSTR = file.read() 
+    measurementsSTR = '[' + measurementsSTR[0:-2] + ']'  
     file.close()
   
-  with open ('data.txt', 'w') as file:
+  with open ('dataParsed.txt', 'w') as file:
      file.write (measurementsSTR)
      file.close()
 
 @app.route('/api', methods=['GET'])
 def get_name():
     proccesFile()
-
-    with open('data.txt', 'r') as file:
-      measurements = json.load(file)
     devices=[]
 
+    with open('dataParsed.txt', 'r') as file:
+      measurements = json.load(file)
+    
     for currentMeasurement in measurements:
       currentDevEUI = currentMeasurement["devEUI"]
-
+      json_obj = json.loads(currentMeasurement["objectJSON"])
 
       if not any(device["id"] == currentDevEUI for device in devices):
-          json_obj = json.loads(currentMeasurement["objectJSON"])
-          # add to devices if the current measurement is from a device that isn't in the list
+          # this add the device of the current measurement only if the current measurement is from a device that isn't in the list
+          
+          measurementsAuxiliar=[] #this auxiliar list of diccionaries will help us to  add all measurements
+          i=1
+          for key, value in json_obj.items():
+             if key != "gpsLocation":
+                measurementsAuxiliar.append({"measurementsName": key, 
+                                             "measurementsValues":[{  "name": currentMeasurement["publishedAt"],
+                                                                      "value": value[str(i)]  }]
+                                              })
+                i+=1
+
           devices.append( {"id": currentDevEUI, 
                           "name": currentMeasurement["deviceName"],
                           "latitude": json_obj["gpsLocation"]["3"]["latitude"],
                           "longitude": json_obj["gpsLocation"]["3"]["longitude"],
-                          "voltageMeasurements": [ 
-                                                    {
-                                                      "name": currentMeasurement["publishedAt"],
-                                                      "value": json_obj["temperatureSensor"]["1"]
-                                                      }
-                                                  ],
-
-                          "currentMeasurements": [ 
-                                                    {
-                                                      "name": currentMeasurement["publishedAt"],
-                                                      "value": json_obj["humiditySensor"]["2"]
-                                                      }
-                                                  ],
-                          "icon": "http://maps.google.com/mapfiles/ms/icons/red-dot.png" } )
-      else:
+                          "icon": "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+                          "allMeasurements": measurementsAuxiliar  
+                            }
+                          )
+          
+      else: #if the device is already in the list, we add only the measurement's data (not the device's data)
          for device in devices:
             if device["id"]== currentDevEUI:
-               device["voltageMeasurements"].append({
-                                                      "name": currentMeasurement["publishedAt"],
-                                                      "value": json_obj["temperatureSensor"]["1"]
-                                                      })
-               
-               device["currentMeasurements"].append({
+               nameMeasurementExist= False
+               for key, value in json_obj.items():
+                  i=1
+                  j=0
+                  while j< len(device["allMeasurements"]):
+                     if key==device["allMeasurements"][j]["measurementsName"]:
+                      nameMeasurementExist= True
+                      device["allMeasurements"][j]["measurementsValues"].append({
                                                         "name": currentMeasurement["publishedAt"],
-                                                        "value": json_obj["humiditySensor"]["2"]
+                                                        "value": value[str(j+1)]
                                                         })
- 
+                     j+=1
+                  if nameMeasurementExist==False:
+                     device["allMeasurements"].append({"measurementsName": key, 
+                                             "measurementsValues":[{  "name": currentMeasurement["publishedAt"],
+                                                                      "value": value[str(i)]  }]
+                                              })
+                  i+=1
 
     return jsonify(devices)
 

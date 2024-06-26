@@ -4,9 +4,8 @@ export class Device {
         public name: string,
         public latitude: number,
         public longitude: number,
-        public voltageMeasurements: any[],
-        public currentMeasurements: any[],
-        public icon: string
+        public icon: string,
+        public allMeasurements: any[]
     ) {}
 
   }

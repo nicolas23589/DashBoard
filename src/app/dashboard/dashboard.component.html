@@ -1,5 +1,4 @@
 
-<div id="map" style="height: 30%; width: 30%;"></div>
 
 <div>
   <ng-container *ngFor="let device of devices">
@@ -8,6 +7,8 @@
     </ul>
   </ng-container>
 </div>
+
+
 
 <div class="container">
   <div class="content">
@@ -25,91 +26,55 @@
   </div>
 </div>
 
+<ng-container *ngFor="let actualMeasurement of currentDevice.allMeasurements"> 
+  <div class="row justify-content-between">
+  
+    <div class="col">
+      <mat-card>
+        <mat-card-title >{{actualMeasurement["measurementsName"]}}</mat-card-title>
+        <ngx-charts-gauge
+        [view]="[300, 300]"
+        [min]="0"
+        [max]="100"
+        [units]= '"Units"'
+        [angleSpan]="240"
+        [startAngle]="-120"
+        [showAxis]="true"
+        [results]='[{"name": actualMeasurement["measurementsName"], "value":actualMeasurement["measurementsValues"][actualMeasurement["measurementsValues"].length -1 ].value}]'>
+        </ngx-charts-gauge>
+      </mat-card>
+    </div>
 
+    <div class="col">
+      <mat-card>
+        <mat-card-title> Historic {{actualMeasurement["measurementsName"]}} Measurements</mat-card-title>
+        <mat-card-content>
+          <ngx-charts-line-chart
+            [view]="[800, 300]"
+            [results]='[{
+                          "name": actualMeasurement["measurementsName"],
+                          "series":actualMeasurement["measurementsValues"]}]'
+            [gradient]="true"
+            [xAxis]="true"
+            [yAxis]="true"
+            [legend]="true"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [xAxisLabel]='"Date and Hour"'
+            [yAxisLabel]='actualMeasurement["measurementsName"] '
+          >
+          </ngx-charts-line-chart>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-<div class="row justify-content-between">
-
-<div class="col mx-1">
-    <mat-card>
-      <mat-card-title >Temperature</mat-card-title>
-      <ngx-charts-gauge
-      [view]="[400, 400]"
-      [min]="0"
-      [max]="100"
-      [units]= "'Celcius'"  
-      [angleSpan]="240"
-      [startAngle]="-120"
-      [showAxis]="true"
-      [results]='[{"name": "Temperature", "value": currentDevice.voltageMeasurements[currentDevice.voltageMeasurements.length - 1].value}]'>
-      </ngx-charts-gauge>
-    </mat-card>
   </div>
-
-    
-  <div class="col mx-1">
-<mat-card>
-  <mat-card-title>Humidity </mat-card-title>
-  <ngx-charts-gauge
-  [view]="[400, 400]"
-  [min]="0"
-  [max]="40"
-  [units]="'Humidity units'"
-  [angleSpan]="240"
-  [startAngle]="-120"
-  [showAxis]="true"
-  [results]='[{"name": "Humidity", "value": currentDevice.currentMeasurements[currentDevice.currentMeasurements.length - 1].value}]'>
-  </ngx-charts-gauge>
-</mat-card>
-</div>
-</div>
+</ng-container>
 
 <div class="row justify-content-center">
 
   <div>
-    <mat-card>
-      <mat-card-title> Historic Voltage Measurements</mat-card-title>
-      <mat-card-content>
-        <ngx-charts-line-chart
-          [view]="[600, 400]"
-          [results]='[{
-                        "name": "Voltage",
-                        "series":currentDevice.voltageMeasurements}]'
-          [gradient]="true"
-          [xAxis]="true"
-          [yAxis]="true"
-          [legend]="true"
-          [showXAxisLabel]="true"
-          [showYAxisLabel]="true"
-          [xAxisLabel]='"Hour"'
-          [yAxisLabel]='"Current"'
-        >
-        </ngx-charts-line-chart>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  <div>
-    <mat-card>
-      <mat-card-title> Historic Current Measurements</mat-card-title>
-      <mat-card-content>
-        <ngx-charts-line-chart
-          [view]="[600, 400]"
-          [results]='[{
-            "name": "Current",
-            "series":currentDevice.currentMeasurements}]'
-          [gradient]="false"
-          [xAxis]="true"
-          [yAxis]="true"
-          [legend]="true"
-          [showXAxisLabel]="true"
-          [showYAxisLabel]="true"
-          [xAxisLabel]='"Hour"'
-          [yAxisLabel]='"Voltage"'
-        >
-        </ngx-charts-line-chart>
-      </mat-card-content>
-    </mat-card>
+    
   </div>
 
 </div>
-
