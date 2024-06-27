@@ -23,7 +23,10 @@ export class DashboardComponent implements OnInit {
   private map: any;
   devices:  Device[] = []; //List of all devices
   currentDevice!: Device;  //Current device that was selected on the map
-  
+
+  startDate: string | null = null;
+  endDate: string | null = null;
+  filtered: any;
   constructor(private dataService: DataService) {  }
 
   ngOnInit() { //THE FUNCTION NGONINIT IS PREDEFINED AS A ANGULAR FUNCTION, SO IT WILL EXCECUTE AT THE BEGGINING EVEN IF YOU DON´T CALL THE FUNCTION
@@ -32,6 +35,24 @@ export class DashboardComponent implements OnInit {
     this.currentDevice= this.devices[0];
     this.initMap();
     this.addMarkers();
+  }
+
+  filtrar() {
+    if (this.startDate && this.endDate) {
+      const start = new Date(this.startDate);
+      const end = new Date(this.endDate);
+
+      const filteredMeasurements = this.currentDevice.allMeasurements.map((measurement: any) => {
+        return {
+          ...measurement,
+          measurementsValues: measurement.measurementsValues.filter((value: any) => {
+            const date = new Date(value.name);
+            return date >= start && date <= end;
+          })
+        };
+      });
+      this.currentDevice["allMeasurements"]= filteredMeasurements;
+    } 
   }
   
   getRealMeasurements(){ //this function calls the service to  obtain the data

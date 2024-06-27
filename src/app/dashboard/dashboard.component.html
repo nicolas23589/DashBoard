@@ -31,7 +31,7 @@
   
     <div class="col">
       <mat-card>
-        <mat-card-title >{{actualMeasurement["measurementsName"]}}</mat-card-title>
+        <mat-card-title >Current {{actualMeasurement["measurementsName"]}}</mat-card-title>
         <ngx-charts-gauge
         [view]="[300, 300]"
         [min]="0"
@@ -78,3 +78,19 @@
   </div>
 
 </div>
+
+<div >
+  <mat-form-field appearance="fill">
+    <mat-label>Start Date and Hour</mat-label>
+    <input matInput placeholder="yyyy-MM-ddTHH:mm:ss" [(ngModel)]="startDate">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>End Date and Hour</mat-label>
+    <input matInput placeholder="yyyy-MM-ddTHH:mm:ss" [(ngModel)]="endDate">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="filtrar()">Filtrar</button>
+</div>
+
+<p>{{filtered}}</p>
