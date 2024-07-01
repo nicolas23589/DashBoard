@@ -26,18 +26,17 @@ export class DashboardComponent implements OnInit {
 
   startDate: string | null = null;
   endDate: string | null = null;
-  filtered: any;
+
   constructor(private dataService: DataService) {  }
 
   ngOnInit() { //THE FUNCTION NGONINIT IS PREDEFINED AS A ANGULAR FUNCTION, SO IT WILL EXCECUTE AT THE BEGGINING EVEN IF YOU DON´T CALL THE FUNCTION
     //There are certain parts of the code that perfectly works here, but doesn´t works (give sinxis errors) outside this function
     this.getRealMeasurements();
-    this.currentDevice= this.devices[0];
     this.initMap();
     this.addMarkers();
   }
 
-  filtrar() {
+  filter() {
     if (this.startDate && this.endDate) {
       const start = new Date(this.startDate);
       const end = new Date(this.endDate);
@@ -52,15 +51,31 @@ export class DashboardComponent implements OnInit {
         };
       });
       this.currentDevice["allMeasurements"]= filteredMeasurements;
+
     } 
+  }
+
+  deleteFilters(){
+
+  }
+
+  calculateAverage(measurementsValues: any[]){
+    let average: number=0;
+    for (let i = 0; i < measurementsValues.length; i++) {
+      average+= measurementsValues[i]["value"]
+    }
+    return average/measurementsValues.length
+
   }
   
   getRealMeasurements(){ //this function calls the service to  obtain the data
+    this.devices= [] //Clean the devicesList to don´t repeat devices in case there exist devices already
     this.dataService.getMeasurementsData().subscribe(receiptDevices => {
       for (let i = 0; i < receiptDevices.length; i++) {
         this.devices.push(receiptDevices[i])
       }
     });
+    this.currentDevice= this.devices[0];
   }
 
   MapOptions: google.maps.MapOptions = {   //Visual options of the google map
@@ -69,10 +84,18 @@ export class DashboardComponent implements OnInit {
     zoom: 13,
   };
 
-  public updateCurrentDevice(deviceClicked: any) { //This function is also called by the manual selector
+  public updateCurrentDevice(deviceClicked: any | null) { //This function is also called by the manual selector
     this.currentDevice= deviceClicked; //Update the current device, it implies that the voltage graphics and others are updated automatically too
     this.devices.forEach(device => device.icon = "http://maps.google.com/mapfiles/ms/icons/red-dot.png"); // this line change all the markets colors to red  
     deviceClicked.icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'; // This change the color of the selected marker
+  }
+
+  onDeviceSelect(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    const selectedDevice = this.devices.find(device => device.name === target.value);
+    if (selectedDevice) {
+      this.currentDevice=selectedDevice;
+    }
   }
 
   private initMap(): void { //This function will init the open street view map (isn't for google maps)
