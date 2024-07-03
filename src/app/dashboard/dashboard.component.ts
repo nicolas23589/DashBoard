@@ -19,7 +19,6 @@ that then uses the code of this file
 
 //This Part of the code will be like the "Object" that can be accesible in the dahsboard.component.html
 export class DashboardComponent implements OnInit {
-  public debug: any;
   private map: any;
   devices:  Device[] = []; //List of all devices
   currentDevice!: Device;  //Current device that was selected on the map
@@ -32,8 +31,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit() { //THE FUNCTION NGONINIT IS PREDEFINED AS A ANGULAR FUNCTION, SO IT WILL EXCECUTE AT THE BEGGINING EVEN IF YOU DON´T CALL THE FUNCTION
     //There are certain parts of the code that perfectly works here, but doesn´t works (give sinxis errors) outside this function
     this.getRealMeasurements();
-    this.initMap();
-    this.addMarkers();
   }
 
   filter() {
@@ -53,10 +50,6 @@ export class DashboardComponent implements OnInit {
       this.currentDevice["allMeasurements"]= filteredMeasurements;
 
     } 
-  }
-
-  deleteFilters(){
-
   }
 
   calculateAverage(measurementsValues: any[]){
@@ -94,27 +87,7 @@ export class DashboardComponent implements OnInit {
     const target = event.target as HTMLSelectElement;
     const selectedDevice = this.devices.find(device => device.name === target.value);
     if (selectedDevice) {
-      this.currentDevice=selectedDevice;
+      this.updateCurrentDevice(selectedDevice);
     }
-  }
-
-  private initMap(): void { //This function will init the open street view map (isn't for google maps)
-    this.map = L.map('map', {
-      center: [40.427421, -86.926492],
-      zoom:12
-    });
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(this.map);
-
-  }
-
-  public addMarkers(): void {
-    this.devices.forEach((device) => {
-      let marker = L.marker([device.latitude, device.longitude]);
-      marker.addTo(this.map)
-        .on('click', () => this.updateCurrentDevice(device)); // this will update the device if the marker is clicked
-    }); 
   }
 }

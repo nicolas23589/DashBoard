@@ -5,21 +5,24 @@ import json
 app = Flask(__name__)
 CORS(app)  # Habilita CORS para todas las rutas
 
-measurementsSTR=''
+dailyDataRoute= "C:/xampp/htdocs/lorawan/data.txt" #rute for the file that contains last day data only
+parsedDataRoute= 'dataParsed.txt' #rute for the file that contains last day data only, but in a completly legible Json format
+historicDataRoute= 'dataHistoric.txt' #rute for the file that contain all the historic data
+
+currentDataRoute= dailyDataRoute
 
 def proccesFile():
-   
-  with open("C:/xampp/htdocs/lorawan/data - copia.txt", 'r') as file:
+  with open(currentDataRoute
+            , 'r') as file:
     measurementsSTR = file.read() 
-    measurementsSTR = '[' + measurementsSTR[0:-2] + ']'  
+    measurementsSTR = '[' + measurementsSTR[0:-2] + ']'  #change the format, adding the items into a list (represented by "[]") and deleting the final comma
     file.close()
-  
-  with open ('dataParsed.txt', 'w') as file:
-     file.write (measurementsSTR)
+  with open (parsedDataRoute, 'w') as file:
+     file.write (measurementsSTR) #file.write cleans the entire file and write the new varaible
      file.close()
 
 @app.route('/api', methods=['GET'])
-def get_name():
+def get_data():
     proccesFile()
     devices=[]
 
@@ -75,6 +78,10 @@ def get_name():
                   i+=1
 
     return jsonify(devices)
+
+@app.route('/api', methods=['GET'])
+def get_data_2():
+   
 
 if __name__ == '__main__':
     app.run(debug=True)

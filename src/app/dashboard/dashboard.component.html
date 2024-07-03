@@ -1,5 +1,6 @@
 
 <p>Select device from the list:</p>
+
 <div>
   <ng-container *ngFor="let device of devices">
         <button (click)="updateCurrentDevice(device) " >{{device.name}}</button>
@@ -44,7 +45,6 @@
   </mat-form-field>
 
   <button mat-raised-button color="primary" (click)="filter()">Filter</button>
-  <button mat-raised-button color="primary" (click)="getRealMeasurements()">Delete Filters and refresh data</button>
 </div>
 
 <ng-container *ngFor="let actualMeasurement of currentDevice.allMeasurements"> 
