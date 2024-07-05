@@ -81,6 +81,7 @@ def get_data():
 
 @app.route('/api', methods=['GET'])
 def get_data_2():
+   return ""
    
 
 if __name__ == '__main__':

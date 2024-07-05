@@ -67,8 +67,9 @@ export class DashboardComponent implements OnInit {
       for (let i = 0; i < receiptDevices.length; i++) {
         this.devices.push(receiptDevices[i])
       }
+      this.currentDevice= this.devices[0];
     });
-    this.currentDevice= this.devices[0];
+    
   }
 
   MapOptions: google.maps.MapOptions = {   //Visual options of the google map
