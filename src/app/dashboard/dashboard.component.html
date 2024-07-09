@@ -1,39 +1,31 @@
+<div class="row">
+  <div class="col" > 
+    <p>Select device from the list:</p>
+    <select (change)="onDeviceSelect($event)">
+      <option *ngFor="let device of devices" [value]="device.name">{{device.name}} ({{device.id}})</option>
+    </select>
+  </div> 
 
-<p>Select device from the list:</p>
-
-<div>
-  <ng-container *ngFor="let device of devices">
-        <button (click)="updateCurrentDevice(device) " >{{device.name}}</button>
-  </ng-container>
-</div>
-
-<select (change)="onDeviceSelect($event)">
-  <option *ngFor="let device of devices" [value]="device.name">{{device.name}}</option>
-</select>
-
-
-<p> Select the device using map:</p>
-<div class="container">
-  <div class="content">
-    <google-map height="300px" width="500px" [options]="MapOptions"> 
-      <ng-container *ngFor="let device of devices">
-        <map-marker
-          [position]="{ lat: device.latitude, lng: device.longitude }" 
-          [icon]="device.icon"
-          
-          (mapClick)="updateCurrentDevice(device)">>
-        </map-marker>
-      </ng-container>
-    </google-map>
-    <p>CurrentDevice: {{currentDevice.name}}</p>
+  <div class="container">
+    <div class="content">
+        <p> Select device using map:</p>
+        <google-map height="300px" width="500px" [options]="MapOptions"> 
+          <ng-container *ngFor="let device of devices">
+            <map-marker
+              [position]="{ lat: device.latitude, lng: device.longitude }" 
+              [icon]="device.icon"
+              (mapClick)="updateCurrentDevice(device)">>
+            </map-marker>
+          </ng-container>
+        </google-map>
+        <p>CurrentDevice: {{currentDevice.name}}</p>
+    </div>
   </div>
 </div>
 
+<p> </p>
+
 <div >
-  <p>Please use the format that appears when clicking the text box.</p>
-  <p>Examples of allowed formats:</p>
-  <p>"2024-06-21" for only date</p>
-  <p>"2024-06-21T17:30:00Z" for date and time. Don´t forget the "Z" at the end</p>
   <mat-form-field appearance="fill">
     <mat-label>Start Date and Hour</mat-label>
     <input matInput placeholder="yyyy-MM-ddTHH:mm:ss" [(ngModel)]="startDate">
@@ -46,6 +38,8 @@
 
   <button mat-raised-button color="primary" (click)="filter()">Filter</button>
 </div>
+<p style="font-size: small;">Please use the format that appears when clicking the text box. The following are examples of allowed formats:</p>
+<p style="font-size: small;">"2024-06-21" for only date. Or "2024-06-21T17:30:00Z" for date and time (Don´t forget the "Z" at the end).</p>
 
 <ng-container *ngFor="let actualMeasurement of currentDevice.allMeasurements"> 
   <div class="row justify-content-between">

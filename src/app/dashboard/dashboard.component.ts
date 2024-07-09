@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Device } from '../Device-class';
 import { DataService } from '../data.service';
-import { MapMarker } from '@angular/google-maps';
-
-declare let L: any; //neccesary for the map
 
 @Component({
   selector: 'app-dashboard',
@@ -17,16 +14,15 @@ directly in the html (no accesing the code of this file), but you can create a o
 that then uses the code of this file
 */
 
-//This Part of the code will be like the "Object" that can be accesible in the dahsboard.component.html
+//This Part of the code (all the entire class) will be like the "Object" (with his variables and functions) that can be accesible in the dahsboard.component.html
 export class DashboardComponent implements OnInit {
-  private map: any;
   devices:  Device[] = []; //List of all devices
   currentDevice!: Device;  //Current device that was selected on the map
 
-  startDate: string | null = null;
+  startDate: string | null = null;  //start date and end date for the filter, start with null value and will be updated by the user
   endDate: string | null = null;
 
-  constructor(private dataService: DataService) {  }
+  constructor(private dataService: DataService) {  } //This is neccesary for be able to use the service and get the data we need
 
   ngOnInit() { //THE FUNCTION NGONINIT IS PREDEFINED AS A ANGULAR FUNCTION, SO IT WILL EXCECUTE AT THE BEGGINING EVEN IF YOU DON´T CALL THE FUNCTION
     //There are certain parts of the code that perfectly works here, but doesn´t works (give sinxis errors) outside this function
@@ -35,7 +31,7 @@ export class DashboardComponent implements OnInit {
 
   filter() {
     if (this.startDate && this.endDate) {
-      const start = new Date(this.startDate);
+      const start = new Date(this.startDate); //parse the date in string format into a operable Date format
       const end = new Date(this.endDate);
 
       const filteredMeasurements = this.currentDevice.allMeasurements.map((measurement: any) => {
@@ -56,9 +52,8 @@ export class DashboardComponent implements OnInit {
     let average: number=0;
     for (let i = 0; i < measurementsValues.length; i++) {
       average+= measurementsValues[i]["value"]
-    }
+      }
     return average/measurementsValues.length
-
   }
   
   getRealMeasurements(){ //this function calls the service to  obtain the data
@@ -67,9 +62,8 @@ export class DashboardComponent implements OnInit {
       for (let i = 0; i < receiptDevices.length; i++) {
         this.devices.push(receiptDevices[i])
       }
-      this.currentDevice= this.devices[0];
+      this.updateCurrentDevice(this.devices[0]);
     });
-    
   }
 
   MapOptions: google.maps.MapOptions = {   //Visual options of the google map
@@ -87,8 +81,6 @@ export class DashboardComponent implements OnInit {
   onDeviceSelect(event: Event) {
     const target = event.target as HTMLSelectElement;
     const selectedDevice = this.devices.find(device => device.name === target.value);
-    if (selectedDevice) {
-      this.updateCurrentDevice(selectedDevice);
-    }
+    if (selectedDevice) {this.updateCurrentDevice(selectedDevice);}
   }
 }
