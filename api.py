@@ -3,31 +3,32 @@ from flask_cors import CORS
 import json
 
 app = Flask(__name__)
-CORS(app)  # Habilita CORS para todas las rutas
+CORS(app)  # ALLOWS CORS TO EVERY ROUTES
 
 dailyDataRoute= "C:/xampp/htdocs/lorawan/data.txt" #rute for the file that contains last day data only
 parsedDataRoute= 'dataParsed.txt' #rute for the file that contains last day data only, but in a completly legible Json format
 historicDataRoute= 'dataHistoric.txt' #rute for the file that contain all the historic data
 
-currentDataRoute= dailyDataRoute
+def proccesFile(currentRoute): #This function will save a parsed copy of the txt file parameter (could be historic or daily) into the parsed txt file
+  with open(currentRoute
+            , 'r') as dataFile:
+    measurementsSTR = dataFile.read() 
+    measurementsSTR = '[' + measurementsSTR[0:-2] + ']'  #change the format, adding the items into a list (represented by "[]") and deleting the final comma. This is neccesary to make the Json legible for angular
+    dataFile.close()
+  with open (parsedDataRoute, 'w') as parsedFile:
+     parsedFile.write (measurementsSTR) #file.write cleans the entire parsedFile and write the measurementsSTR varaible only
+     parsedFile.close()
 
-def proccesFile():
-  with open(currentDataRoute
-            , 'r') as file:
-    measurementsSTR = file.read() 
-    measurementsSTR = '[' + measurementsSTR[0:-2] + ']'  #change the format, adding the items into a list (represented by "[]") and deleting the final comma
-    file.close()
-  with open (parsedDataRoute, 'w') as file:
-     file.write (measurementsSTR) #file.write cleans the entire file and write the new varaible
-     file.close()
+def get_data(): #
+    """This function will use the dataParsed file (that have been changed before in the proccesfile function to have 
+    daily or historic data) to get data and then return a json with only the needed information for angular,  
+     also, this function will be group the measurements per device, to return a list of devices with its measurements insteand
+      of  a list of measurements only """
 
-@app.route('/api', methods=['GET'])
-def get_data():
-    proccesFile()
     devices=[]
 
     with open('dataParsed.txt', 'r') as file:
-      measurements = json.load(file)
+      measurements = json.load(file) #measurements has now the content of the dataParsedFile
     
     for currentMeasurement in measurements:
       currentDevEUI = currentMeasurement["devEUI"]
@@ -79,9 +80,15 @@ def get_data():
 
     return jsonify(devices)
 
-@app.route('/api', methods=['GET'])
-def get_data_2():
-   return ""
+@app.route('/daily', methods=['GET'])
+def get_daily_data():
+   proccesFile(dailyDataRoute)
+   return get_data()
+
+@app.route('/historic', methods=['GET']) 
+def get_historic_data():
+   proccesFile(historicDataRoute) 
+   return get_data()
    
 
 if __name__ == '__main__':

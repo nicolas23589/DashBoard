@@ -1,3 +1,12 @@
+<div>
+  <label>
+    <input type="checkbox" (change)="onCheckboxChange($event)" />
+    Include historic data
+  </label>
+  <p style="font-size: small;">if not  selected, the system will load only the current day data </p>
+  <p style="font-size: small;">if selected, the system will load all the available data, select this if you want to include data from dates before today.</p>
+</div>
+
 <div class="row">
   <div class="col" > 
     <p>Select device from the list:</p>
@@ -12,6 +21,7 @@
         <google-map height="300px" width="500px" [options]="MapOptions"> 
           <ng-container *ngFor="let device of devices">
             <map-marker
+              title= {{device.name}}
               [position]="{ lat: device.latitude, lng: device.longitude }" 
               [icon]="device.icon"
               (mapClick)="updateCurrentDevice(device)">>
@@ -23,16 +33,16 @@
   </div>
 </div>
 
-<p> </p>
+<p></p>
 
 <div >
   <mat-form-field appearance="fill">
-    <mat-label>Start Date and Hour</mat-label>
+    <mat-label>Start Date and Hour *</mat-label>
     <input matInput placeholder="yyyy-MM-ddTHH:mm:ss" [(ngModel)]="startDate">
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>End Date and Hour</mat-label>
+    <mat-label>End Date and Hour *</mat-label>
     <input matInput placeholder="yyyy-MM-ddTHH:mm:ss" [(ngModel)]="endDate">
   </mat-form-field>
 

@@ -8,11 +8,17 @@ import { Device } from './Device-class';
 })
 export class DataService {
 
-  private jsonUrl ='http://127.0.0.1:5000/api';
+  private dailyJsonUrl ='http://127.0.0.1:5000/daily';
+  private historicJsonUrl ='http://127.0.0.1:5000/historic';
 
   constructor(private http: HttpClient) { }
 
-  getMeasurementsData(): Observable<Device[]> {
-    return this.http.get<Device[]>(this.jsonUrl);
+  getData(historic: Boolean): Observable<Device[]> {
+    let finalUrl= this.dailyJsonUrl;
+    if (historic==true){
+      finalUrl= this.historicJsonUrl;
+    }
+    return this.http.get<Device[]>(finalUrl);
   }
+
 }

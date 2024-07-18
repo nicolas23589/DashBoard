@@ -16,20 +16,22 @@ that then uses the code of this file
 
 //This Part of the code (all the entire class) will be like the "Object" (with his variables and functions) that can be accesible in the dahsboard.component.html
 export class DashboardComponent implements OnInit {
+
   devices:  Device[] = []; //List of all devices
   currentDevice!: Device;  //Current device that was selected on the map
 
   startDate: string | null = null;  //start date and end date for the filter, start with null value and will be updated by the user
   endDate: string | null = null;
+  historicBool: boolean= false; //Variable that says if the systems would load all the historic data or only the daily data, at the beggining is only the daily data, can be updated by the user
 
   constructor(private dataService: DataService) {  } //This is neccesary for be able to use the service and get the data we need
 
   ngOnInit() { //THE FUNCTION NGONINIT IS PREDEFINED AS A ANGULAR FUNCTION, SO IT WILL EXCECUTE AT THE BEGGINING EVEN IF YOU DON´T CALL THE FUNCTION
     //There are certain parts of the code that perfectly works here, but doesn´t works (give sinxis errors) outside this function
-    this.getRealMeasurements();
+    this.getMeasurements();
   }
 
-  filter() {
+  filter() {  //function that uses the start and end date to filter all the data
     if (this.startDate && this.endDate) {
       const start = new Date(this.startDate); //parse the date in string format into a operable Date format
       const end = new Date(this.endDate);
@@ -43,12 +45,13 @@ export class DashboardComponent implements OnInit {
           })
         };
       });
-      this.currentDevice["allMeasurements"]= filteredMeasurements;
-
+      this.currentDevice["allMeasurements"]= filteredMeasurements; /*this will delete the measurements that doesn´t
+      match the filter, but only in the RAM copy that angular has. To recover the data of other dates is neccesary
+      to call again the function getMeasurements, that call the python api*/
     } 
   }
 
-  calculateAverage(measurementsValues: any[]){
+  calculateAverage(measurementsValues: any[]){ //this function return the average of any measurements list
     let average: number=0;
     for (let i = 0; i < measurementsValues.length; i++) {
       average+= measurementsValues[i]["value"]
@@ -56,13 +59,13 @@ export class DashboardComponent implements OnInit {
     return average/measurementsValues.length
   }
   
-  getRealMeasurements(){ //this function calls the service to  obtain the data
+  getMeasurements(){ //this function calls the service to  obtain the data of daily Measurements
     this.devices= [] //Clean the devicesList to don´t repeat devices in case there exist devices already
-    this.dataService.getMeasurementsData().subscribe(receiptDevices => {
+    this.dataService.getData(this.historicBool).subscribe(receiptDevices => {
       for (let i = 0; i < receiptDevices.length; i++) {
         this.devices.push(receiptDevices[i])
       }
-      this.updateCurrentDevice(this.devices[0]);
+      this.updateCurrentDevice(this.devices[0]); //by default, the selected device is the first on the list
     });
   }
 
@@ -72,15 +75,21 @@ export class DashboardComponent implements OnInit {
     zoom: 13,
   };
 
-  public updateCurrentDevice(deviceClicked: any | null) { //This function is also called by the manual selector
+  public updateCurrentDevice(deviceClicked: any | null) { //This function is called by the map
     this.currentDevice= deviceClicked; //Update the current device, it implies that the voltage graphics and others are updated automatically too
-    this.devices.forEach(device => device.icon = "http://maps.google.com/mapfiles/ms/icons/red-dot.png"); // this line change all the markets colors to red  
-    deviceClicked.icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'; // This change the color of the selected marker
+    this.devices.forEach(device => device.icon = "../assets/diselectedLeaf.png"); // this line change all the markets colors to red  
+    deviceClicked.icon = '../assets/green-leaves.svg'; // This change the color of the selected marker
   }
 
-  onDeviceSelect(event: Event) {
+  onDeviceSelect(event: Event) { //This function is called by the manual selector to update the current device
     const target = event.target as HTMLSelectElement;
     const selectedDevice = this.devices.find(device => device.name === target.value);
     if (selectedDevice) {this.updateCurrentDevice(selectedDevice);}
   }
+
+  onCheckboxChange(event: Event) {//This function check if the checkbox is checked to update the historicBool Variable to know if is neccesary to load historic data or daily data only
+    const checkbox= event.target as HTMLInputElement;
+    this.historicBool= checkbox.checked; //checkbox.checked return true or false, depending of the user selection
+    this.getMeasurements();
+}
 }
