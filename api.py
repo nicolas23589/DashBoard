@@ -1,17 +1,24 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 import json
+import ChripstackSimulator
 
 app = Flask(__name__)
 CORS(app)  # ALLOWS CORS TO EVERY ROUTES
 
-dailyDataRoute= "C:/xampp/htdocs/lorawan/data.txt" #rute for the file that contains last day data only
-parsedDataRoute= 'dataParsed.txt' #rute for the file that contains last day data only, but in a completly legible Json format
-historicDataRoute= 'dataHistoric.txt' #rute for the file that contain all the historic data
+#ATENTION! Uncomment this 2 lines and comment the 3 lines below to use compost bin data instand of electric data
+
+#dailyDataRoute= 'dailyCompostBin.txt'
+#historicDataRoute= 'dataHistoric.txt' #route for the file that contain all the historic data
+
+dailyDataRoute='dailyElectric.txt' #route for the file that contains last day data only
+historicDataRoute= 'dataHistoric.txt' #route for the file that contain all the historic data
+
+parsedDataRoute= 'dataParsed.txt' #route for the file that contains last day data only, in a completly legible Json format
 
 def proccesFile(currentRoute): #This function will save a parsed copy of the txt file parameter (could be historic or daily) into the parsed txt file
-  with open(currentRoute
-            , 'r') as dataFile:
+  ChripstackSimulator.simulateChirpstack() #neccesary if is electric data, this will fill the electric txt files from the UtilityDailyRegister
+  with open(currentRoute, 'r') as dataFile:
     measurementsSTR = dataFile.read() 
     measurementsSTR = '[' + measurementsSTR[0:-2] + ']'  #change the format, adding the items into a list (represented by "[]") and deleting the final comma. This is neccesary to make the Json legible for angular
     dataFile.close()
@@ -49,8 +56,8 @@ def get_data(): #
 
           devices.append( {"id": currentDevEUI, 
                           "name": currentMeasurement["deviceName"],
-                          "latitude": json_obj["gpsLocation"]["3"]["latitude"],
-                          "longitude": json_obj["gpsLocation"]["3"]["longitude"],
+                          "latitude": json_obj["gpsLocation"][str(i)]["latitude"],
+                          "longitude": json_obj["gpsLocation"][str(i)]["longitude"],
                           "icon": "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
                           "allMeasurements": measurementsAuxiliar  
                             }
