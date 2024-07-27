@@ -3,7 +3,12 @@ def simulateChirpstack():
     
     with open('UtilityDailyRegisters.txt', 'r') as file: #open the file
         with open( 'dailyElectric.txt', 'a') as targetFile:
+            i=0
             while(True): 
+                if i==0: 
+                    i=1
+                else: 
+                    i=0
                 firstLine= file.readline() #read date and skip
                 if firstLine=='':
                     break
@@ -106,7 +111,7 @@ def simulateChirpstack():
                 maximum_2 = maximum_2[1].split("\n")
                 maximum_2 = float(maximum_2[0].strip().replace(",", "."))
 
-                newData= {"applicationID":"2","applicationName":"app1","deviceName":"Walters Farm","devEUI":"JLOn7lPpYn9=","rxInfo":[],
+                newData= {"applicationID":"2","applicationName":"app1","deviceName":"Walter Farm" + str(i),"devEUI":"JLOn7lPpYn9=" + str(i),"rxInfo":[],
                         "txInfo":{"frequency":868100000,"modulation":"LORA","loRaModulationInfo":{"bandwidth":125,"spreadingFactor":7,"codeRate":"4/5","polarizationInversion":False}},
                         "adr":True,"dr":5,"fCnt":47,"fPort":2,"data":"AWcBGwJolAOIBis08r0FAAAA",
                         "objectJSON":{"activePower": {"1": activePower},

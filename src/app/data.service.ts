@@ -8,8 +8,8 @@ import { Device } from './Device-class';
 })
 export class DataService {
 
-  private dailyJsonUrl ='http://127.0.0.1:5000/daily';
-  private historicJsonUrl ='http://127.0.0.1:5000/historic';
+  private dailyJsonUrl ='http://192.168.0.103:5000/daily';
+  private historicJsonUrl ='http://192.168.0.103:5000/historic';
 
   constructor(private http: HttpClient) { }
 

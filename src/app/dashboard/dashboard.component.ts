@@ -24,6 +24,13 @@ export class DashboardComponent implements OnInit {
   endDate: string | null = null;
   historicBool: boolean= false; //Variable that says if the systems would load all the historic data or only the daily data, at the beggining is only the daily data, can be updated by the user
 
+  selectedImageRote: string= "../assets/selectedRay.png" //Routes fo the images that the map will use to show the selected and diselected markers
+  diselectedImageRote: string= "../assets/diselectedRay.png"
+
+  //discomment and comment aboce to changes the images for compost bin project
+  //selectedImageRote: string= "../assets/diselectedLeaf.png" //Routes fo the images that the map will use to show the selected and diselected markers
+  //diselectedImageRote: string= "../assets/selectedLeaf.png"
+
   constructor(private dataService: DataService) {  } //This is neccesary for be able to use the service and get the data we need
 
   ngOnInit() { //THE FUNCTION NGONINIT IS PREDEFINED AS A ANGULAR FUNCTION, SO IT WILL EXCECUTE AT THE BEGGINING EVEN IF YOU DON´T CALL THE FUNCTION
@@ -39,7 +46,7 @@ export class DashboardComponent implements OnInit {
       const filteredMeasurements = this.currentDevice.allMeasurements.map((measurement: any) => {
         return {
           ...measurement,
-          measurementsValues: measurement.measurementsValues.filter((value: any) => {
+          measurementsValues: measurement.measurementsValues.filter((value: any) => { //.filter uses angular pre-defined function
             const date = new Date(value.name);
             return date >= start && date <= end;
           })
@@ -59,7 +66,7 @@ export class DashboardComponent implements OnInit {
     return average/measurementsValues.length
   }
   
-  getMeasurements(){ //this function calls the service to  obtain the data of daily Measurements
+  getMeasurements(){ //this function calls the service (wich will use http) to  obtain the data of daily Measurements
     this.devices= [] //Clean the devicesList to don´t repeat devices in case there exist devices already
     this.dataService.getData(this.historicBool).subscribe(receiptDevices => {
       for (let i = 0; i < receiptDevices.length; i++) {
@@ -70,15 +77,15 @@ export class DashboardComponent implements OnInit {
   }
 
   MapOptions: google.maps.MapOptions = {   //Visual options of the google map
-    mapId: "e87693c86192baae", //should be the same id that appears in google maps console
+    mapId: "e87693c86192baae", //should be the same id that appears in google maps console (in your google account)
     center: { lat:40.428421, lng:-86.917492},
     zoom: 13,
   };
 
   public updateCurrentDevice(deviceClicked: any | null) { //This function is called by the map
     this.currentDevice= deviceClicked; //Update the current device, it implies that the voltage graphics and others are updated automatically too
-    this.devices.forEach(device => device.icon = "../assets/diselectedLeaf.png"); // this line change all the markets colors to red  
-    deviceClicked.icon = '../assets/green-leaves.svg'; // This change the color of the selected marker
+    this.devices.forEach(device => device.icon = this.diselectedImageRote); // this line change all the markets colors to red  
+    deviceClicked.icon = this.selectedImageRote; // This change the color of the selected marker
   }
 
   onDeviceSelect(event: Event) { //This function is called by the manual selector to update the current device
