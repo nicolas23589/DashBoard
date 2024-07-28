@@ -18,9 +18,9 @@ to be in parsed format everytime (making the api efficiently)
 """
 
 #dailyDataRoute= 'dailyCompostBin.txt' # uncomment this line and comment the below line to change the data from one project to another
-dailyDataRoute='dailyElectric.txt' #route for the file that contains last day data only
+dailyDataRoute= 'C:/xampp/htdocs/lorawan/data.txt'
 historicDataRoute= 'dataHistoric.txt' #rute for the file that contain all the historic data
-historicBackUpRoute= "C:/Users/GATOTEC18/Documents/SURF/DashboradTest/backUp"
+historicBackUpRoute= "backUp"
 
 dailyBackUp=''
 historicData= ''
