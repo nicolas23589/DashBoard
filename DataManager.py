@@ -1,3 +1,4 @@
+import datetime
 import time
 
 """IMPORTANT
@@ -21,7 +22,6 @@ dailyDataRoute='dailyElectric.txt' #route for the file that contains last day da
 historicDataRoute= 'dataHistoric.txt' #rute for the file that contain all the historic data
 historicBackUpRoute= "C:/Users/GATOTEC18/Documents/SURF/DashboradTest/backUp"
 
-day=1
 dailyBackUp=''
 historicData= ''
 
@@ -37,7 +37,9 @@ while True:
      dailyBackUpFile.close()
 
     #this part make a backUp,  saving one file per day in the folder setted before
-    with open (historicBackUpRoute + '/'+ str(day) + '.txt', 'w') as historicBackUpfile:
+    currentDate = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M")
+    newRoute = f"{historicBackUpRoute}/{currentDate}.txt"
+    with open (newRoute, 'w') as historicBackUpfile:  #save a .txt file with the name of the current time
         historicBackUpfile.write(dailyBackUp)
         historicBackUpfile.close()
 
@@ -51,7 +53,7 @@ while True:
         historicDataFile.write(historicData+dailyBackUp)
         historicDataFile.close()
 
-    day+=1
+
 
     print ("backup done")
     time.sleep (86400) #Sleep for 86400 seconds, this is 24 hourse5434344
