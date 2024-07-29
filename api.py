@@ -1,3 +1,4 @@
+import random
 from flask import Flask, jsonify
 from flask_cors import CORS
 import json
@@ -6,7 +7,7 @@ app = Flask(__name__)
 CORS(app)  # ALLOWS CORS TO EVERY ROUTES
 
 
-dailyDataRoute= "C:/xampp/htdocs/lorawan/data.txt"
+dailyDataRoute= 'dailyCompostBin.txt'
 historicDataRoute= 'dataHistoric.txt' #route for the file that contain all the historic data
 parsedDataRoute= 'dataParsed.txt' #route for the file that contains last day data only, in a completly legible Json format
 
@@ -43,7 +44,7 @@ def get_data(): #
              if key != "gpsLocation":
                 measurementsAuxiliar.append({"measurementsName": key, 
                                              "measurementsValues":[{  "name": currentMeasurement["publishedAt"],
-                                                                      "value": value[str(i)]  }]
+                                                                      "value": value[str(i)] + random.randint(0,10)  }] 
                                               })
                 i+=1
 
@@ -68,13 +69,13 @@ def get_data(): #
                       nameMeasurementExist= True
                       device["allMeasurements"][j]["measurementsValues"].append({
                                                         "name": currentMeasurement["publishedAt"],
-                                                        "value": value[str(j+1)]
+                                                        "value": value[str(j+1)] + random.randint(0, 20) 
                                                         })
                      j+=1
                   if nameMeasurementExist==False:
                      device["allMeasurements"].append({"measurementsName": key, 
                                              "measurementsValues":[{  "name": currentMeasurement["publishedAt"],
-                                                                      "value": value[str(i)]  }]
+                                                                      "value": value[str(i)]- random.randint(0, 20)  }]
                                               })
                   i+=1
 

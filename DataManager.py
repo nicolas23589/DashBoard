@@ -56,5 +56,5 @@ while True:
 
 
     print ("backup done")
-    time.sleep (86400) #Sleep for 86400 seconds, this is 24 hourse5434344
+    time.sleep (86400) #Sleep for 86400 seconds, this is 24 hourse
 
